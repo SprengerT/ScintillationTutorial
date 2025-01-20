@@ -81,3 +81,20 @@ You can look at the delays of your system with
 Sc.plot_delays()
 ~~~
 Again, the intrinsic signal is assumed to be point-like. In reality, a pulse or burst will have a nonzero length and structure that gets convolved with the delays, similar to the case of the images above.
+
+### Scintillation
+
+Scintillation is an interference effect. The waves traveling along different scattered paths arrive also with phase delays with respect to each other. Stable interference patterns are only possible for coherent radiation. The phase evolution of waves depends on the radio frequency such that a particular spectral pattern is obtained.\
+To simulate scintillation, we first need to define a frequency band, for example:
+~~~
+nu = np.linspace(1200.*MHz,1600.*MHz,num=200)
+~~~
+Since the computation can be longer for large numbers of images and is not very optimized here, it makes sense to separate computation and plotting. Scintillation is computed with
+~~~
+I = Sc.compute_scintillation(nu)
+~~~
+and plotted with
+~~~
+Sc.plot_scintillation(nu,I)
+~~~
+Each pair of interfering paths introduces another sinusoidal pattern to the scintillation. As a result, a low number of scattered paths leads to a clearly periodic pattern while a patchy random pattern without clear periodicity is indicative of a high number of scattered paths.
