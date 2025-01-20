@@ -42,7 +42,7 @@ Throughout this tutorial, the values of all variables with physical dimensions w
 
 ## Single scattered rays
 
-We start by creating a very simple scattering geometry. First, we need to define the distance of the source. To get an intuition, use the distance of a pulsar of FRB that you know. In the case of FRBs, all distances are angular diameter distances. The example shown here follows numbers that are reasonable for PSR B1508+55.
+We start by creating a very simple scattering geometry. First, we need to define the distance of the source. To get an intuition, use the distance of a pulsar, FRB, or AGN that you know. In the case of extragalactic objects, all distances are angular diameter distances. The example shown here follows numbers that are reasonable for PSR B1508+55.
 The following lines create an instance of the *ScatteredSignal* class with your chosen distance:
 ~~~
 Sc = ScatteredSignal(D = 2100.*pc)
@@ -57,7 +57,10 @@ You can plot this scattering geometry with
 ~~~
 Sc.plot_rays()
 ~~~
-This plot shows the paths the radio waves are taking from the source at the right to the observer on the left. Of course, these paths are not directly observable. For this reason, the main work within the field of scintillometry is to reconstruct them from the data we get.\
+This plot shows the paths the radio waves are taking from the source at the right to the observer on the left. Of course, these paths are not directly observable. For this reason, the main work within the field of scintillometry is to reconstruct them from the data we get.
+
+### Scattering disk
+
 If we have instruments with sufficient angular resolution, we can observe that the scattered rays arrive from different angular positions on the sky. Such a plot of the sky can be created with
 ~~~
 Sc.plot_images()
@@ -67,4 +70,9 @@ To enter an image that is offset in both dimensions on the sky, use
 ~~~
 Sc.addPoint(D=425.*pc,x=-0.1*au,y=0.5*au)
 ~~~
-Compare the size of your scattering disk to the $\lambda / D$ of a large dish or the baselines possible in ground-based VLBI to see if you could observe it.\
+Compare the size of your scattering disk to the $\lambda / D$ of a large dish or the baselines possible in ground-based VLBI to see if you could observe it.
+
+### Scattering delay
+
+Pulsed sources like pulsars allow for the measurement of the time of arrival of radiation. Hence, parts of the signal that are delayed can be separated. Signals are delayed because of the changed speed of propagation within a medium (dispersive delay) and because of different lengths of their paths between source and observer (geometric delay).
+
