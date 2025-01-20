@@ -1,1 +1,3 @@
 # ScintillationTutorial
+
+## Setup
