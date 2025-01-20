@@ -53,3 +53,7 @@ Sc.addPoint(D=125.*pc,x=0.1*au)
 ~~~
 This class method adds a new scattering point. If there are already points, they will not be deleted.
 In this example, the pulsar is 2100 parsecs away. At a distance of 125 pc from Earth, an unspecified object that is offset from the direct line of sight by 0.1 astronomical units scatters the radio waves.
+You can plot this scattering geometry with
+~~~
+Sc.plot_rays()
+~~~
