@@ -74,5 +74,10 @@ Compare the size of your scattering disk to the $\lambda / D$ of a large dish or
 
 ### Scattering delay
 
-Pulsed sources like pulsars allow for the measurement of the time of arrival of radiation. Hence, parts of the signal that are delayed can be separated. Signals are delayed because of the changed speed of propagation within a medium (dispersive delay) and because of different lengths of their paths between source and observer (geometric delay).
-
+Pulsed sources like pulsars allow for the measurement of the time of arrival of radiation. Hence, parts of the signal that are delayed can be separated. Signals are delayed because of the changed speed of propagation within a medium (dispersive delay) and because of different lengths of their paths between source and observer (geometric delay). The dispersion delay of the bulk of the system is what comprises the dispersion measure (DM). While each path could have a slightly different DM, this has, interestingly, not been observed to be significant. The geometric delay between the paths is much larger, so we will neglect the dispersive delay.\
+The delay is obtained by dividing the difference between the length of the scattered path and the direct path by the speed of light. In the small-angle approximation the triangular shape leads to the delay being proportional to the square of the offset of the scatterer from the direct line of sight.\
+You can look at the delays of your system with
+~~~
+Sc.plot_delays()
+~~~
+Again, the intrinsic signal is assumed to be point-like. In reality, a pulse or burst will have a nonzero length and structure that gets convolved with the delays, similar to the case of the images above.
