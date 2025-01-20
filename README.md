@@ -1,4 +1,4 @@
-# ScintillationTutorial
+# Scintillation Tutorial
 
 The idea of this tutorial is to create a jupyter notebook to explore and visualize the basic mechanisms and observables of the scintillation of a compact radio source.
 
@@ -40,5 +40,16 @@ kms = 1000. #m/s
 ~~~
 Throughout this tutorial, the values of all variables with physical dimensions will be set in units of meter, second, radian, and hertz to avoid errors.
 
+## Single scattered rays
 
-
+We start by creating a very simple scattering geometry. First, we need to define the distance of the source. To get an intuition, use the distance of a pulsar of FRB that you know. The example shown here follows numbers that are reasonable for PSR B1508+55.
+The following lines create an instance of the *ScatteredSignal* class with your chosen distance:
+~~~
+Sc = ScatteredSignal(D = 2100.*pc)
+~~~
+Now we define a scattered path by introducing a point in space that is passed by an additional ray from the source to the observer. Again, use numbers of your choice:
+~~~
+Sc.addPoint(D=125.*pc,x=0.1*au)
+~~~
+This class method adds a new scattering point. If there are already points, they will not be deleted.
+In this example, the pulsar is 2100 parsecs away. At a distance of 125 pc from Earth, an unspecified object that is offset from the direct line of sight by 0.1 astronomical units scatters the radio waves.
