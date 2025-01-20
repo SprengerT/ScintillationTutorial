@@ -11,8 +11,10 @@ Python3 with these libraries installed is required:
 
 First, download *scintillation_tutorial.py* from this repository.
 Then start the jupyter notebook in the directory that contains this file:
-> cd PATH/TO/DIRECTORY
-> jupyter notebook
+´´´
+cd PATH/TO/DIRECTORY
+jupyter notebook
+´´´
 
 Within the notebook, we start by importing the libraries used:
 > import numpy as np
