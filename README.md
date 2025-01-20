@@ -2,5 +2,5 @@
 
 ## Setup
 
-For this tutorial these Python libraries are used:
+For this tutorial Python3 with these libraries are used:
 > numpy matplotlib
