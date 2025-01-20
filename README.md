@@ -67,4 +67,4 @@ To enter an image that is offset in both dimensions on the sky, use
 ~~~
 Sc.addPoint(D=425.*pc,x=-0.1*au,y=0.5*au)
 ~~~
-$\lambda / D$
+Compare the size of your scattering disk to the $\lambda / D$ of a large dish or the baselines possible in ground-based VLBI to see if you could observe it.\
