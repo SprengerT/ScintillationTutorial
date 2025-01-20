@@ -67,3 +67,4 @@ To enter an image that is offset in both dimensions on the sky, use
 ~~~
 Sc.addPoint(D=425.*pc,x=-0.1*au,y=0.5*au)
 ~~~
+$\lambda / D$
