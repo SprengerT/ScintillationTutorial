@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 from scintillation_tutorial import ScatteredSignal
 ~~~
 
-Next, we define the numerical values of some constants and units:
+Next, we define the numerical values of some units conversions:
 ~~~
 #constants
 au = 149597870700. #m
