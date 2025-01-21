@@ -97,4 +97,43 @@ and plotted with
 ~~~
 Sc.plot_scintillation(nu,I)
 ~~~
-Each pair of interfering paths introduces another sinusoidal pattern to the scintillation. As a result, a low number of scattered paths leads to a clearly periodic pattern while a patchy random pattern without clear periodicity is indicative of a high number of scattered paths.
+Each pair of interfering paths introduces another sinusoidal pattern to the scintillation. As a result, a low number of scattered paths leads to a clearly periodic pattern while a patchy random pattern without clear periodicity is indicative of a high number of scattered paths.\
+
+In the first case, scintillation is much easier to study in Fourier space, while the second case is intrinsically more difficult to study. In fact, the vast majority of modern pulsar scintillometry happens solely in Fourier space, which is why it is important to familiarize yourself with it.\
+The power spectrum is a good representation of the strength of each conjugate frequency component. It is computed as the squared modulus of the Fourier transform:
+~~~
+power = np.abs(np.fft.fft(I))**2
+~~~
+The values of the conjugate frequencies are obtained by
+~~~
+f_nu = np.fft.fftfreq(N_nu,dnu)
+~~~
+These coordinates are not sorted from smallest to highest value by definition. This needs to be changed:
+~~~
+power = np.fft.fftshift(power)
+f_nu = np.fft.fftshift(f_nu)
+~~~
+Now, we can plot the power spectrum:
+~~~
+figure = plt.figure(figsize=(16,9))
+ax = figure.add_subplot(1,1,1)
+ax.plot(f_nu*MHz,power/np.max(power),color="black",marker="",linestyle='-')
+ax.set_xlabel(r"Delay $f_{\nu}=\tau$ [1/MHz=µs]")
+ax.set_ylabel(r"Power $\vert {\rm FT}(I)\vert^2$ (max=1)")
+~~~
+The range of values and the resolution within a power spectrum are a direct consequence of the value range and channel width of the observed frequencies. They are inverse to each other:
+~~~
+N_nu = len(nu)
+dnu = nu[1]-nu[0]
+BW = nu[-1]-nu[0]
+print("Number of channels: {0}\nChannel width: {1:.2e} MHz\tinverted: {2:.2e} µs\nBandwidth: {3:.2e} MHz\t\tinverted: {4:.2e} µs".format(N_nu,dnu/MHz,1/(dnu/MHz),BW/MHz,1/(BW/MHz)))
+~~~
+The power spectrum is affected by many Fourier artifacts for which different mitigation techniques have been developed. A simple one is to subtract the mean before performing the FFT:
+~~~
+power = np.abs(np.fft.fft(I-np.mean(I)))**2
+~~~
+The coordinates of spikes of power can be predicted from the image positions defined earlier and represent a differential version of their delays. That's why the Fourier conjugate of frequency is also called delay $\tau$. We can compare the theoretical positions of power:
+~~~
+Sc.plot_differential_delays(y_max=0.1)
+~~~
+The naming can be confusing because this is the delay difference between all pairs of images instead of between one image and the direct line of sight. Also, we look at the phase delay here, while before we were looking at the group delay. Both happen to be the same in the purely geometrical case.
