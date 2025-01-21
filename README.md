@@ -137,3 +137,35 @@ The coordinates of spikes of power can be predicted from the image positions def
 Sc.plot_differential_delays(y_max=0.1)
 ~~~
 The naming can be confusing because this is the delay difference between all pairs of images instead of between one image and the direct line of sight. Also, we look at the phase delay here, while before we were looking at the group delay. Both happen to be the same in the purely geometrical case.
+
+### Dynamic scintillation
+
+Since scintillation is sensitive to small positional differences, it is also sensitive to small shifts of those over time. Because of the high velocity of most pulsars, scatterers can move quickly such that the source needs to be densely sampled within a short time to use the dynamic information. This can only be done with bright pulsars and rapidly repeating FRBs.
+
+Velocities need to be assigned to the observer, the pulsar, as well as each scatterer. Velocity components along the line of sight are negligible because of the astronomical distances involved, such that all velocities are two-dimensional vectors:
+~~~
+D_s = 2100.*pc #distance to your favourite pulsar/FRB
+V_p = [30.*kms,0.] #Earth's orbital velocity is 30 km/s
+PMRA = -73.64
+PMDEC = -62.65
+V_RA = PMRA*mas/year*D_s
+V_DEC = PMDEC*mas/year*D_s
+V_s = [V_RA,V_DEC]
+Sc = ScatteredSignal(D = 2100.*pc,V_p=V_p,V_s=V_s)
+Sc.addPoint(D=125.*pc,x=0.1*au,V_x=1.*kms,V_y=0.1*kms)
+~~~
+After defining a time and a frequency axis, we can compute the dynamic spectrum, which is the same as above but with the movements of all objects taken into account:
+~~~
+t = np.linspace(0.,30.*minute,num=200)
+nu = np.linspace(1200.*MHz,1600.*MHz,num=200)
+I = Sc.compute_dynamic_spectrum(t,nu)
+~~~
+Two-dimensional data can be visualized with a colormap of your choice:
+~~~
+figure = plt.figure(figsize=(16,9))
+ax = figure.add_subplot(1,1,1)
+plot = ax.pcolormesh(t/minute,nu/MHz,np.swapaxes(I/np.std(I),0,1),cmap="viridis",vmin=0.,vmax=None,shading='nearest')
+figure.colorbar(plot, ax=ax)
+ax.set_xlabel(r"Time $t$ [minutes]")
+ax.set_ylabel(r"frequency $\nu$ [MHz]")
+~~~
