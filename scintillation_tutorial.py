@@ -59,7 +59,7 @@ class ScatteredSignal:
         self.points = np.concatenate((self.points,point[:,na]),axis=1)
         
     def plot_rays(self,**kwargs):
-        figure = scinter_plot.draw_canvas(plot_width = 1200,plot_height = 700)
+        figure = draw_canvas(plot_width = 1200,plot_height = 700)
         ax = figure.add_subplot(1,1,1)
         ax.plot([0.,self.D_s/pc],[0.,0.],color='black',marker="",linestyle="-")
         ax.set_xlabel("Distance along line of sight [pc]")
@@ -71,7 +71,7 @@ class ScatteredSignal:
         Deff = self.points[2]*self.D_s/(self.D_s-self.points[2])
         delays = Deff/(2.*v_c)*(self.points[0]**2+self.points[1]**2)/self.points[2]**2
         
-        figure = scinter_plot.draw_canvas(plot_width = 1200,plot_height = 700)
+        figure = draw_canvas(plot_width = 1200,plot_height = 700)
         ax = figure.add_subplot(1,1,1)
         ax.vlines([0.],[0.],[1.],color='black')
         ax.set_xlabel(r"Delay $\tau$ [µs]")
@@ -85,7 +85,7 @@ class ScatteredSignal:
         thx = self.points[0]/self.points[2]
         thy = self.points[1]/self.points[2]
         
-        figure = scinter_plot.draw_canvas(plot_width = 1200,plot_height = 700)
+        figure = draw_canvas(plot_width = 1200,plot_height = 700)
         ax = figure.add_subplot(1,1,1)
         ax.set_xlabel(r"$\theta_x$ [mas]")
         ax.set_ylabel(r"$\theta_y$ [mas]")
@@ -102,7 +102,7 @@ class ScatteredSignal:
         return np.abs(E)**2
         
     def plot_scintillation(self,nu,I,**kwargs):
-        figure = scinter_plot.draw_canvas(plot_width = 1200,plot_height = 700)
+        figure = draw_canvas(plot_width = 1200,plot_height = 700)
         ax = figure.add_subplot(1,1,1)
         ax.set_xlabel(r"frequency $\nu$ [MHz]")
         ax.set_ylabel(r"Intensity $I$ (max=1)")
@@ -115,7 +115,7 @@ class ScatteredSignal:
         Deff = self.points[2]*self.D_s/(self.D_s-self.points[2])
         delays = Deff/(2.*v_c)*(self.points[0]**2+self.points[1]**2)/self.points[2]**2
         
-        figure = scinter_plot.draw_canvas(plot_width = 1200,plot_height = 700)
+        figure = draw_canvas(plot_width = 1200,plot_height = 700)
         ax = figure.add_subplot(1,1,1)
         ax.set_xlabel(r"Delay $\tau$ [µs]")
         ax.set_ylabel("Intensity $I$ (1=center)")
