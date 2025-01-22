@@ -34,7 +34,7 @@ degrees = np.pi/180. #rad
 mas = degrees/1000./3600. #rad
 kHz = 1.0e+3 #Hz
 MHz = 1.0e+6 #Hz
-mus = 1.0-6 #s
+mus = 1.0e-6 #s
 minute = 60. #s
 kms = 1000. #m/s
 ~~~
@@ -106,6 +106,8 @@ power = np.abs(np.fft.fft(I))**2
 ~~~
 The values of the conjugate frequencies are obtained by
 ~~~
+N_nu = len(nu)
+dnu = nu[1]-nu[0]
 f_nu = np.fft.fftfreq(N_nu,dnu)
 ~~~
 These coordinates are not sorted from smallest to highest value by definition. This needs to be changed:
@@ -123,12 +125,10 @@ ax.set_ylabel(r"Power $\vert {\rm FT}(I)\vert^2$ (max=1)")
 ~~~
 The range of values and the resolution within a power spectrum are a direct consequence of the value range and channel width of the observed frequencies. They are inverse to each other:
 ~~~
-N_nu = len(nu)
-dnu = nu[1]-nu[0]
 BW = nu[-1]-nu[0]
 print("Number of channels: {0}\nChannel width: {1:.2e} MHz\tinverted: {2:.2e} µs\nBandwidth: {3:.2e} MHz\t\tinverted: {4:.2e} µs".format(N_nu,dnu/MHz,1/(dnu/MHz),BW/MHz,1/(BW/MHz)))
 ~~~
-The power spectrum is affected by many Fourier artifacts for which different mitigation techniques have been developed. A simple one is to subtract the mean before performing the FFT:
+The power spectrum is affected by many Fourier artifacts for which different mitigation techniques have been developed. A simple one is to subtract the mean before performing the FFT, which removes the central bright peak:
 ~~~
 power = np.abs(np.fft.fft(I-np.mean(I)))**2
 ~~~
@@ -168,4 +168,39 @@ plot = ax.pcolormesh(t/minute,nu/MHz,np.swapaxes(I/np.std(I),0,1),cmap="viridis"
 figure.colorbar(plot, ax=ax)
 ax.set_xlabel(r"Time $t$ [minutes]")
 ax.set_ylabel(r"frequency $\nu$ [MHz]")
+~~~
+
+~~~
+Sec = np.abs(np.fft.fft2(I))**2
+Sec = np.fft.fftshift(Sec)
+
+N_nu = len(nu)
+dnu = nu[1]-nu[0]
+f_nu = np.fft.fftfreq(N_nu,dnu)
+f_nu = np.fft.fftshift(f_nu)
+
+N_t = len(t)
+dt = t[1]-t[0]
+f_t = np.fft.fftfreq(N_t,dt)
+f_t = np.fft.fftshift(f_t)
+~~~
+
+~~~
+figure = plt.figure(figsize=(16,9))
+ax = figure.add_subplot(1,1,1)
+plot = ax.pcolormesh(f_t/MHz,f_nu/mus,np.swapaxes(Sec,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
+figure.colorbar(plot, ax=ax)
+ax.set_xlabel(r"Doppler rate $f_{t}=f_{\rm D}$ [mHz]")
+ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
+~~~
+
+~~~
+Sec[Sec < 0.] = 0.
+min_nonzero = np.min(Sec[np.nonzero(Sec)])
+Sec[Sec == 0.] = min_nonzero
+Sec = np.log10(Sec)
+~~~
+
+~~~
+Sc.plot_delay_doppler(np.mean(nu))
 ~~~

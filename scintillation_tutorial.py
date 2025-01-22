@@ -35,6 +35,7 @@ ms = 1.0e-3 #s
 mus = 1.0e-6 #s
 degrees = np.pi/180.
 mas = degrees/1000./3600.
+mHz = 1.0e-3 #Hz
 MHz = 1.0e+6 #Hz
 kms = 1000. #km/s
 
@@ -79,7 +80,6 @@ class ScatteredSignal:
         ax.set_ylim([0.,None])
         for i_point in range(self.points.shape[1]):
             ax.vlines(delays[i_point]/mus,[0],self.points[3,i_point],color="blue")
-        #ax.vlines(delays/ms,np.zeros(self.points.shape[1]),self.points[3],color="blue")
         
     def plot_images(self,**kwargs):
         thx = self.points[0]/self.points[2]
@@ -141,3 +141,24 @@ class ScatteredSignal:
             for i_t,v_t in enumerate(t):
                 E[i_t,i_nu] += np.sum(self.points[3]*np.exp(2.0j*np.pi*v_nu*(delays+v_t*dopplers)))
         return np.abs(E)**2
+        
+    def plot_delay_doppler(self,nu0,**kwargs):
+        Deff = self.points[2]*self.D_s/(self.D_s-self.points[2])
+        delays = Deff/(2.*v_c)*(self.points[0]**2+self.points[1]**2)/self.points[2]**2
+        
+        Veff = self.V_p[:,na] - self.D_s/(self.D_s-self.points[2])*self.points[(4,5),:] + self.points[2]/(self.D_s-self.points[2])*self.V_s[:,na]
+        dopplers = -1.*(Veff[0]*self.points[0]+Veff[1]*self.points[1])/(self.points[2]*v_c)
+        
+        delays = delays/mus
+        dopplers = nu0*dopplers/mHz
+        
+        figure = draw_canvas(plot_width = 1200,plot_height = 700)
+        ax = figure.add_subplot(1,1,1)
+        ax.set_xlabel(r"Doppler rate $f_{\rm D}$ [mHz]")
+        ax.set_ylabel(r"Delay $\tau$ [µs]")
+        for i in range(len(self.points[0])):
+            ax.plot(dopplers[i]-dopplers,delays[i]-delays,color="red",marker='o',linestyle="")
+            ax.plot(dopplers-dopplers[i],delays-delays[i],color="red",marker='o',linestyle="")
+        ax.plot(dopplers,delays,color="blue",marker='o',linestyle="")
+        ax.plot(-dopplers,-delays,color="blue",marker='o',linestyle="")
+        ax.plot([0],[0],color="black",marker='o',linestyle="")
