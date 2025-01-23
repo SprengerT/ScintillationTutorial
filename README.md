@@ -127,6 +127,7 @@ The range of values and the resolution within a power spectrum are a direct cons
 ~~~
 BW = nu[-1]-nu[0]
 print("Number of channels: {0}\nChannel width: {1:.2e} MHz\tinverted: {2:.2e} µs\nBandwidth: {3:.2e} MHz\t\tinverted: {4:.2e} µs".format(N_nu,dnu/MHz,1/(dnu/MHz),BW/MHz,1/(BW/MHz)))
+print("Number of delay bins: {0}\nDelay bin width: {1:.2e} µs\nMax delay: {2:.2e} µs".format(len(f_nu),(f_nu[1]-f_nu[0])/1.0e-6,f_nu[-1]/1.0e-6))
 ~~~
 The power spectrum is affected by many Fourier artifacts for which different mitigation techniques have been developed. A simple one is to subtract the mean before performing the FFT, which removes the central bright peak:
 ~~~
