@@ -196,10 +196,18 @@ ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
 ~~~
 
 ~~~
-Sec[Sec < 0.] = 0.
-min_nonzero = np.min(Sec[np.nonzero(Sec)])
-Sec[Sec == 0.] = min_nonzero
-Sec = np.log10(Sec)
+Sec_plot = np.copy(Sec)
+Sec_plot[Sec_plot < 0.] = 0.
+min_nonzero = np.min(Sec_plot[np.nonzero(Sec_plot)])
+Sec_plot[Sec_plot == 0.] = min_nonzero
+Sec_plot = np.log10(Sec_plot)
+
+figure = plt.figure(figsize=(16,9))
+ax = figure.add_subplot(1,1,1)
+plot = ax.pcolormesh(f_t/MHz,f_nu/mus,np.swapaxes(Sec_plot,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
+figure.colorbar(plot, ax=ax)
+ax.set_xlabel(r"Doppler rate $f_{t}=f_{\rm D}$ [mHz]")
+ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
 ~~~
 
 ~~~
