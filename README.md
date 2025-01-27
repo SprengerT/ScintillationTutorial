@@ -32,6 +32,7 @@ day = 24*3600 #s
 year = 365.2425*day #s
 degrees = np.pi/180. #rad
 mas = degrees/1000./3600. #rad
+mHz = 1.0e-3 #Hz
 kHz = 1.0e+3 #Hz
 MHz = 1.0e+6 #Hz
 mus = 1.0e-6 #s
@@ -189,7 +190,7 @@ f_t = np.fft.fftshift(f_t)
 ~~~
 figure = plt.figure(figsize=(16,9))
 ax = figure.add_subplot(1,1,1)
-plot = ax.pcolormesh(f_t/MHz,f_nu/mus,np.swapaxes(Sec,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
+plot = ax.pcolormesh(f_t/mHz,f_nu/mus,np.swapaxes(Sec,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
 figure.colorbar(plot, ax=ax)
 ax.set_xlabel(r"Doppler rate $f_{t}=f_{\rm D}$ [mHz]")
 ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
@@ -204,7 +205,7 @@ Sec_plot = np.log10(Sec_plot)
 
 figure = plt.figure(figsize=(16,9))
 ax = figure.add_subplot(1,1,1)
-plot = ax.pcolormesh(f_t/MHz,f_nu/mus,np.swapaxes(Sec_plot,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
+plot = ax.pcolormesh(f_t/mHz,f_nu/mus,np.swapaxes(Sec_plot,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
 figure.colorbar(plot, ax=ax)
 ax.set_xlabel(r"Doppler rate $f_{t}=f_{\rm D}$ [mHz]")
 ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")

@@ -89,6 +89,7 @@ class ScatteredSignal:
         ax = figure.add_subplot(1,1,1)
         ax.set_xlabel(r"$\theta_x$ [mas]")
         ax.set_ylabel(r"$\theta_y$ [mas]")
+        ax.set_aspect('equal')
         ax.plot([0],[0],color="black",marker='o',linestyle="")
         ax.plot(thx/mas,thy/mas,color="blue",marker='o',linestyle="")
         
