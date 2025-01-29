@@ -214,3 +214,7 @@ ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
 ~~~
 Sc.plot_delay_doppler(np.mean(nu))
 ~~~
+
+## Autocorrelation analysis
+
+The autocorrelation function is the real space version of the secondary spectrum and often less affected by low data quality. It shows the average shape of scintles which makes it useful to characterize the impact of scintillation. However, the scattered rays live in Fourier space which makes it difficult to extract more information from the ACF.
