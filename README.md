@@ -69,7 +69,7 @@ Sc.plot_images()
 Note that this plot assumes that the source is a point. For an extended source each of the scatterd paths would look like the source and potentially overlap to the point where they cannot be separated. In scintillometry jargon, we call each scattered path an *image* for this reason since each path creates another image of the source on the sky. Much of the terminology is shared with strong gravitational lensing. But keep in mind that in the case of scintillation, each of these images is usually assumed to be just a point because the source is compact. If there is a large cloud of images, the scattered source may appear like a *scattering disk*.\
 To enter an image that is offset in both dimensions on the sky, use
 ~~~
-Sc.addPoint(D=425.*pc,x=-0.1*au,y=0.5*au)
+Sc.addPoint(D=425.*pc,x=-0.1*au,y=0.2*au)
 ~~~
 Compare the size of your scattering disk to the $\lambda / D$ of a large dish or the baselines possible in ground-based VLBI to see if you could observe it.
 
