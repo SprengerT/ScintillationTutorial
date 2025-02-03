@@ -36,6 +36,7 @@ mas = degrees/1000./3600. #rad
 mHz = 1.0e-3 #Hz
 kHz = 1.0e+3 #Hz
 MHz = 1.0e+6 #Hz
+GHz = 1.0e+9 #Hz
 mus = 1.0e-6 #s
 minute = 60. #s
 kms = 1000. #m/s
