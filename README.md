@@ -26,6 +26,7 @@ from scintillation_tutorial import ScatteredSignal
 Next, we define the numerical values of some units conversions:
 ~~~
 #constants
+v_c = 299792458. #m/s
 au = 149597870700. #m
 pc = 648000./np.pi*au #m
 day = 24*3600 #s
