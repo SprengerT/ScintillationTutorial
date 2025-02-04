@@ -174,6 +174,9 @@ ax.set_xlabel(r"Time $t$ [minutes]")
 ax.set_ylabel(r"frequency $\nu$ [MHz]")
 ~~~
 
+### Secondary spectrum
+
+The secondary spectrum is the power spectrum of the dynamic spectrum. The Fourier transform is performed over both time and frequency:
 ~~~
 Sec = np.abs(np.fft.fft2(I))**2
 Sec = np.fft.fftshift(Sec)
@@ -188,7 +191,7 @@ dt = t[1]-t[0]
 f_t = np.fft.fftfreq(N_t,dt)
 f_t = np.fft.fftshift(f_t)
 ~~~
-
+We obtain another two-dmensional data set:
 ~~~
 figure = plt.figure(figsize=(16,9))
 ax = figure.add_subplot(1,1,1)
@@ -197,7 +200,7 @@ figure.colorbar(plot, ax=ax)
 ax.set_xlabel(r"Doppler rate $f_{t}=f_{\rm D}$ [mHz]")
 ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
 ~~~
-
+In most cases, the power of scattered components is much weaker than the center. Hence, the standard way to present the secondary spectrum is to use the deimal logarithm:
 ~~~
 Sec_plot = np.copy(Sec)
 Sec_plot[Sec_plot < 0.] = 0.
@@ -212,10 +215,11 @@ figure.colorbar(plot, ax=ax)
 ax.set_xlabel(r"Doppler rate $f_{t}=f_{\rm D}$ [mHz]")
 ax.set_ylabel(r"Delay $f_{\nu}=\tau$ [µs]")
 ~~~
-
+From geometry, we can compute where we expect points of power in the secondary spectrum:
 ~~~
 Sc.plot_delay_doppler(np.mean(nu))
 ~~~
+Contrary to the delay, the Doppler rate is dependent on frequency such that the secondary spectrum looks different at different frequencies even if the scattering geometry would stay constant (which it does not).
 
 ## Autocorrelation analysis
 
