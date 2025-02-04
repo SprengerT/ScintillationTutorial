@@ -142,6 +142,24 @@ Sc.plot_differential_delays(y_max=0.1)
 ~~~
 The naming can be confusing because this is the delay difference between all pairs of images instead of between one image and the direct line of sight. Also, we look at the phase delay here, while before we were looking at the group delay. Both happen to be the same in the purely geometrical case.
 
+
+## Autocorrelation function (ACF)
+
+The autocorrelation function is the real space version of the power spectrum and often less affected by low data quality. It shows the average shape of scintles which makes it useful to characterize the impact of scintillation. However, the scattered rays live in Fourier space which makes it difficult to extract more information from the ACF.
+
+It can be computed and plotted as follows:
+~~~
+nu_lag = nu - np.mean(nu)
+data = (I - np.mean(I))/np.mean(I)
+ACF = np.correlate(data,data,mode='same')/len(data)
+
+figure = plt.figure(figsize=(16,9))
+ax = figure.add_subplot(1,1,1)
+ax.plot(nu_lag/MHz,ACF,color="black",marker="",linestyle='-')
+ax.set_xlabel(r"frequency lag $\Delta\nu$ [MHz]")
+ax.set_ylabel(r"ACF")
+~~~
+
 ### Dynamic scintillation
 
 Since scintillation is sensitive to small positional differences, it is also sensitive to small shifts of those over time. Because of the high velocity of most pulsars, scatterers can move quickly such that the source needs to be densely sampled within a short time to use the dynamic information. This can only be done with bright pulsars and rapidly repeating FRBs.
@@ -220,7 +238,3 @@ From geometry, we can compute where we expect points of power in the secondary s
 Sc.plot_delay_doppler(np.mean(nu))
 ~~~
 Contrary to the delay, the Doppler rate is dependent on frequency such that the secondary spectrum looks different at different frequencies even if the scattering geometry would stay constant (which it does not).
-
-## Autocorrelation analysis
-
-The autocorrelation function is the real space version of the secondary spectrum and often less affected by low data quality. It shows the average shape of scintles which makes it useful to characterize the impact of scintillation. However, the scattered rays live in Fourier space which makes it difficult to extract more information from the ACF.
