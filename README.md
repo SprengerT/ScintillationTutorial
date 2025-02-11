@@ -100,7 +100,7 @@ and plotted with
 ~~~
 Sc.plot_scintillation(nu,I)
 ~~~
-Each pair of interfering paths introduces another sinusoidal pattern to the scintillation. As a result, a low number of scattered paths leads to a clearly periodic pattern while a patchy random pattern without clear periodicity is indicative of a high number of scattered paths.\
+Each pair of interfering paths introduces another sinusoidal pattern to the scintillation. As a result, a low number of scattered paths leads to a clearly periodic pattern while a patchy random pattern without clear periodicity is indicative of a high number of scattered paths.
 
 In the first case, scintillation is much easier to study in Fourier space, while the second case is intrinsically more difficult to study. In fact, the vast majority of modern pulsar scintillometry happens solely in Fourier space, which is why it is important to familiarize yourself with it.\
 The power spectrum is a good representation of the strength of each conjugate frequency component. It is computed as the squared modulus of the Fourier transform:
