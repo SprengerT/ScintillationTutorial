@@ -149,7 +149,7 @@ The autocorrelation function is the real space version of the power spectrum and
 It can be computed and plotted as follows:
 ~~~
 nu_lag = nu - np.mean(nu)
-data = (I - np.mean(I))/np.mean(I)
+data = (I - np.mean(I))/np.std(I)
 ACF = np.correlate(data,data,mode='same')/len(data)
 
 figure = plt.figure(figsize=(16,9))
