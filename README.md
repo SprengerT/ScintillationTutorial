@@ -238,7 +238,7 @@ Sc.plot_delay_doppler(np.mean(nu))
 ~~~
 Contrary to the delay, the Doppler rate is dependent on frequency such that the secondary spectrum looks different at different frequencies even if the scattering geometry would stay constant (which it does not).
 
-### Example 1D Gaussian screen
+### Example: 1D Gaussian screen
 
 Such a screen of arbitrary rotation can be created by adding the following images, now making use of different amplitudes of each image:
 ~~~
@@ -257,4 +257,25 @@ arr_x = rng.uniform(-screen_radius,screen_radius,size=N_th)
 arr_mu = np.exp(-0.5*arr_x**2/screen_width**2)
 for i_x,val_x in enumerate(arr_x):
     Sc.addPoint(D=D_x,x=val_x*np.cos(alpha),y=val_x*np.sin(alpha),V_x=V_x,V_y=V_y,mu=arr_mu[i_x])
+~~~
+
+### Example: 2D Gaussian screen
+
+This creates a much less structured secondary spectrum.
+~~~
+D_x = 125*pc
+V_x = 10.*kms
+V_y = 0.
+N_th = 30
+screen_width = 1.*au
+screen_radius = 3.*au
+
+rng = np.random.default_rng()
+arr_x = rng.uniform(-screen_radius,screen_radius,size=N_th)
+arr_y = rng.uniform(-screen_radius,screen_radius,size=N_th)
+arr_mu = np.exp(-0.5*(arr_x[:,None]**2+arr_y[None,:]**2)/screen_width**2)
+for i_th in range(N_th):
+    val_x = arr_x[i_th]
+    val_y = arr_y[i_th]
+    Sc.addPoint(D=D_x,x=val_x,y=val_y,V_x=V_x,V_y=V_y,mu=np.exp(-0.5*(val_x**2+val_y**2)/screen_width**2))
 ~~~
