@@ -279,3 +279,19 @@ for i_th in range(N_th):
     val_y = arr_y[i_th]
     Sc.addPoint(D=D_x,x=val_x,y=val_y,V_x=V_x,V_y=V_y,mu=np.exp(-0.5*(val_x**2+val_y**2)/screen_width**2))
 ~~~
+
+The ACF of the dynamic spectrum shows the average scales of scintillation both in time and frequency. It should not be computed with the slow method of `np.correlate`:
+~~~
+import scipy
+
+nu_lag = scipy.signal.correlation_lags(len(nu), len(nu), mode="same")*(nu[1]-nu[0])
+t_lag = scipy.signal.correlation_lags(len(t), len(t), mode="same")*(t[1]-t[0])
+data = (I - np.mean(I))/np.std(I)
+ACF = scipy.signal.correlate(data,data,mode='same')/data.shape[0]*data.shape[1]
+
+figure = plt.figure(figsize=(16,9))
+ax = figure.add_subplot(1,1,1)
+plot = ax.pcolormesh(t_lag/minute,nu_lag/MHz,np.swapaxes(ACF,0,1),cmap="viridis",vmin=None,vmax=None,shading='nearest')
+ax.set_xlabel(r"time lag $\Delta t$ [min]")
+ax.set_ylabel(r"frequency lag $\Delta\nu$ [MHz]")
+~~~
