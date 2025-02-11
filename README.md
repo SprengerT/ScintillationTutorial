@@ -237,3 +237,24 @@ From geometry, we can compute where we expect points of power in the secondary s
 Sc.plot_delay_doppler(np.mean(nu))
 ~~~
 Contrary to the delay, the Doppler rate is dependent on frequency such that the secondary spectrum looks different at different frequencies even if the scattering geometry would stay constant (which it does not).
+
+### Example 1D Gaussian screen
+
+Such a screen of arbitrary rotation can be created by adding the following images, now making use of different amplitudes of each image:
+~~~
+D_x = 125*pc
+alpha = 155*degrees
+V = 10.*kms
+N_th = 30
+screen_width = 1.*au
+screen_radius = 3.*au
+
+V_x = V*np.cos(alpha)
+V_y = V*np.sin(alpha)
+
+rng = np.random.default_rng()
+arr_x = rng.uniform(-screen_radius,screen_radius,size=N_th)
+arr_mu = np.exp(-0.5*arr_x**2/screen_width**2)
+for i_x,val_x in enumerate(arr_x):
+    Sc.addPoint(D=D_x,x=val_x*np.cos(alpha),y=val_x*np.sin(alpha),V_x=V_x,V_y=V_y,mu=arr_mu[i_x])
+~~~
