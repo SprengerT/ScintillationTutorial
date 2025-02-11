@@ -91,7 +91,7 @@ class ScatteredSignal:
         ax.set_ylabel(r"$\theta_y$ [mas]")
         ax.set_aspect('equal')
         ax.plot([0],[0],color="black",marker='o',linestyle="")
-        ax.plot(thx/mas,thy/mas,color="blue",marker='o',linestyle="")
+        ax.scatter(thx/mas,thy/mas,c=self.points[3],marker='o',linestyle="",cmap="viridis")
         
     def compute_scintillation(self,nu,**kwargs):
         Deff = self.points[2]*self.D_s/(self.D_s-self.points[2])
